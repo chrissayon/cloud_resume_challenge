@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christopher's Resume</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
 </head>
-<body onload="myFunction()">
+
+<body>
     <div class="topnav">
         <a>Resume</a>
         <a>About</a>
         <a id="visitcount">
-            <script src="index.js"></script>
+            <!-- Load visitor count from DynamoDB table -->
+            <!-- <script src="index.js"></script> -->   
+            
         </a>
     </div>
     <h1>Christopher Sayon</h1>
-
-    
     <div>
         <h2>Employment History</h2>
         <h3>Technical Support Representative</h3>
@@ -63,5 +65,26 @@
             <li>Took 1st place at the international competition out of 23 university teams</li>
         </ul>
     </div>
+    
+    <script type="text/javascript">
+        var creds = new AWS.Credentials('access_id', 'key');
+        var dynamodb = new AWS.DynamoDB({
+            region: 'ap-southeast-2',
+            credentials: creds
+        });
+        
+        var params = {
+            TableName: "CloudResume",
+            Key: {
+                "visitorCount": {N: "0"}
+            }
+        }
+
+        dynamodb.getItem(params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response)
+        });
+   </script>
+   
 </body>
 </html>
