@@ -65,26 +65,6 @@
             <li>Took 1st place at the international competition out of 23 university teams</li>
         </ul>
     </div>
-    
-    <script type="text/javascript">
-        var creds = new AWS.Credentials('access_id', 'key');
-        var dynamodb = new AWS.DynamoDB({
-            region: 'ap-southeast-2',
-            credentials: creds
-        });
-        
-        var params = {
-            TableName: "CloudResume",
-            Key: {
-                "visitorCount": {N: "0"}
-            }
-        }
-
-        dynamodb.getItem(params, function(err, data) {
-            if (err) console.log(err, err.stack); // an error occurred
-            else     console.log(data);           // successful response)
-        });
-   </script>
    
 </body>
 </html>
